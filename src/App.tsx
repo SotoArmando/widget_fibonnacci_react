@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Fibonacci from './Brain';
 
 function App() {
+  const [sequencyNumbers, setSequencyNumber] = useState<number>(10);
+  const [exceptionNumberisnotreal] = [(e:number) => (e < 0 ? 'Number is not real' : '')] 
+
+  const handleSequencyUpdate = function (e: React.FormEvent<HTMLInputElement>): void {
+    setSequencyNumber(parseInt(e.currentTarget.value));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" >
+    <input value={sequencyNumbers} type="number" onChange={handleSequencyUpdate} />
+    <div>Output: </div>
+      {
+        [Fibonacci(sequencyNumbers).map(e =>
+          <div>{e}</div>
+        ),
+        <span className="error">{exceptionNumberisnotreal(sequencyNumbers)}</span>
+        ]
+      }
     </div>
   );
 }
